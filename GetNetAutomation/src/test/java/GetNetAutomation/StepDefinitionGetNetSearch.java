@@ -21,7 +21,7 @@ public class StepDefinitionGetNetSearch {
 	
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private long timeoutInSeconds = 15L;
+	private long timeoutInSeconds = 30L;
 		
 	@Before
 	public void setUp() {
