@@ -39,12 +39,13 @@ public class StepDefinitionGetNetSearch {
 	
     @Given("I access the GetNet homepage at {string}")
     public void openHomepage(String url) {
+    	// open the homepage and await for it to be fully loaded
     	driver.get(url);
     	wait.until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));   	
     }
     
     @When("I search for {string}")
-    public void search(String query) throws InterruptedException {
+    public void search(String query) {
     	// click the search button to open the search bar
     	wait.until(ExpectedConditions.elementToBeClickable(By.id("search-trigger")));
     	driver.findElement(By.id("search-trigger")).click();
@@ -62,19 +63,21 @@ public class StepDefinitionGetNetSearch {
     
     @And("I select the {string} from the search result")
     public void selectSearchResult(String result) {	    	
+    	// click the search result
     	wait.until(ExpectedConditions.elementToBeClickable(By.linkText(result)));
     	driver.findElement(By.linkText(result)).click();    	
     }
     
     @Then("a popup with the title {string} is displayed")
     public void checkPopupTitle(String popupTitle) {
-        // Wait for the page to load timeout after ten seconds
+    	// wait for the popup to open
         wait.until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return driver.switchTo().activeElement().isDisplayed();
             }
         });
         
+        // check the title against the scenario example value
         WebElement element = driver.switchTo().activeElement().findElement(By.className("o-modal__title"));
         assertTrue(element.getText().contentEquals(popupTitle));
     }
